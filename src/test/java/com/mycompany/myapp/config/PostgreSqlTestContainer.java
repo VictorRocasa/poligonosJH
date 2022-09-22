@@ -1,4 +1,4 @@
-package com.mycompany.myapp.config;
+/*package com.mycompany.myapp.config;
 
 import java.util.Collections;
 import org.slf4j.Logger;
@@ -39,4 +39,4 @@ public class PostgreSqlTestContainer implements SqlTestContainer {
     public JdbcDatabaseContainer<?> getTestContainer() {
         return postgreSQLContainer;
     }
-}
+}*/

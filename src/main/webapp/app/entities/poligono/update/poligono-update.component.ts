@@ -29,8 +29,6 @@ export class PoligonoUpdateComponent implements OnInit {
     protected activatedRoute: ActivatedRoute
   ) {}
 
-  compareForma = (o1: IForma | null, o2: IForma | null): boolean => this.formaService.compareForma(o1, o2);
-
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ poligono }) => {
       this.poligono = poligono;

@@ -29,6 +29,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
   }
 
+  listarPoligonos(): void {
+    this.router.navigate(['/poligono']);
+  }
+
+  listarFormas(): void {
+    this.router.navigate(['/forma']);
+  }
+
+  verEstoque(): void {
+    this.router.navigate(['']); //'/estoque']);
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

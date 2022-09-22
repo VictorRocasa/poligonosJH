@@ -13,7 +13,11 @@
 
         <div class="row mb-3">
           <label class="form-label" for="field_lados">Lados</label>
-          <input type="number" class="form-control" name="lados" id="field_lados" data-cy="lados" formControlName="lados" />
+          <select class="form-control" id="field_lados" data-cy="lados" name="lados" formControlName="lados">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="formaOption" *ngFor="let formaOption of [3, 4, 5, 6, 7]">{{ formaOption }}</option>
+          </select>
+
           <div *ngIf="editForm.get('lados')!.invalid && (editForm.get('lados')!.dirty || editForm.get('lados')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('lados')?.errors?.required"> O campo é obrigatório. </small>
             <small class="form-text text-danger" [hidden]="!editForm.get('lados')?.errors?.number"> Este campo é do tipo numérico. </small>
@@ -29,63 +33,6 @@
               Este campo é do tipo numérico.
             </small>
           </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_dataCriacao">Data Criacao</label>
-          <div class="d-flex">
-            <input
-              id="field_dataCriacao"
-              data-cy="dataCriacao"
-              type="datetime-local"
-              class="form-control"
-              name="dataCriacao"
-              formControlName="dataCriacao"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-          <div *ngIf="editForm.get('dataCriacao')!.invalid && (editForm.get('dataCriacao')!.dirty || editForm.get('dataCriacao')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('dataCriacao')?.errors?.required"> O campo é obrigatório. </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('dataCriacao')?.errors?.datetimelocal">
-              Este campo é do tipo data/hora.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_ultimaModificacao">Ultima Modificacao</label>
-          <div class="d-flex">
-            <input
-              id="field_ultimaModificacao"
-              data-cy="ultimaModificacao"
-              type="datetime-local"
-              class="form-control"
-              name="ultimaModificacao"
-              formControlName="ultimaModificacao"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-          <div
-            *ngIf="
-              editForm.get('ultimaModificacao')!.invalid &&
-              (editForm.get('ultimaModificacao')!.dirty || editForm.get('ultimaModificacao')!.touched)
-            "
-          >
-            <small class="form-text text-danger" *ngIf="editForm.get('ultimaModificacao')?.errors?.required">
-              O campo é obrigatório.
-            </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('ultimaModificacao')?.errors?.datetimelocal">
-              Este campo é do tipo data/hora.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_forma">Forma</label>
-          <select class="form-control" id="field_forma" data-cy="forma" name="forma" formControlName="forma" [compareWith]="compareForma">
-            <option [ngValue]="null"></option>
-            <option [ngValue]="formaOption" *ngFor="let formaOption of formasSharedCollection">{{ formaOption.id }}</option>
-          </select>
         </div>
       </div>
 

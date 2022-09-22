@@ -4,53 +4,51 @@
   </div>
 
   <div class="col-md-9">
-    <h1 class="display-4"><span>Bem vindo, Java Hipster!</span> (Poligonos)</h1>
-
-    <p class="lead">Esta é a página principal</p>
+    <h1 class="display-4"><span>Cadastro de Polígonos</span></h1>
 
     <div [ngSwitch]="account !== null">
-      <div class="alert alert-success" *ngSwitchCase="true">
-        <span id="home-logged-message" *ngIf="account">Você está logado como "{{ account.login }}".</span>
+      <div *ngSwitchCase="true">
+        <div class="alert alert-success">
+          <span id="home-logged-message" *ngIf="account">Você está logado como "{{ account.login }}".</span>
+        </div>
+        <button type="button" (click)="listarPoligonos()">Listar Poligonos</button>
+        <button type="button" (click)="listarFormas()">Listar Formas</button>
+        <button type="button" (click)="verEstoque()">Visualizar Estoque</button>
       </div>
 
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span>Se deseja </span>
-        <a class="alert-link" (click)="login()">entrar</a
-        ><span
-          >, utilize as seguintes contas padrões:<br />- Administrador (usuário="admin" and senha="admin") <br />- Usuário (usuário="user" e
-          senha="user").</span
-        >
-      </div>
+      <div *ngSwitchCase="false">
+        <div class="alert alert-warning">
+          <span>Você não está logado, </span>
+          <a class="alert-link" (click)="login()">entre</a>
+          <span> ou </span>
+          <a class="alert-link" routerLink="account/register">crie uma nova conta</a>
+        </div>
 
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span>Não possui uma conta ainda?</span>&nbsp;
-        <a class="alert-link" routerLink="account/register">Crie uma nova conta</a>
+        <p>Site criado usando o JHipster:</p>
+
+        <ul>
+          <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">Página principal JHipster</a></li>
+          <li>
+            <a href="https://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">JHipster no Stack Overflow</a>
+          </li>
+          <li>
+            <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer"
+              >JHipster bug tracker</a
+            >
+          </li>
+          <li>
+            <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer"
+              >Sala de bate-papo pública JHipster</a
+            >
+          </li>
+          <li><a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">siga @jhipster no Twitter</a></li>
+        </ul>
+
+        <p>
+          <span>Se você gosta do JHipster, não se esqueça de avaliar no</span>
+          <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">GitHub</a>!
+        </p>
       </div>
     </div>
-
-    <p>Em caso de dúvida sobre o JHipster:</p>
-
-    <ul>
-      <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">Página principal JHipster</a></li>
-      <li>
-        <a href="https://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">JHipster no Stack Overflow</a>
-      </li>
-      <li>
-        <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer"
-          >JHipster bug tracker</a
-        >
-      </li>
-      <li>
-        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer"
-          >Sala de bate-papo pública JHipster</a
-        >
-      </li>
-      <li><a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">siga @jhipster no Twitter</a></li>
-    </ul>
-
-    <p>
-      <span>Se você gosta do JHipster, não se esqueça de avaliar no</span>
-      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">GitHub</a>!
-    </p>
   </div>
 </div>
