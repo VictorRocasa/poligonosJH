@@ -1,0 +1,22 @@
+entity Poligono {
+	lados Integer required,
+	tamanho Float required,
+	dataCriacao Instant required,
+	ultimaModificacao Instant required
+}
+
+entity Forma {
+}
+
+relationship OneToMany {
+	Forma to Poligono{forma}
+}
+
+relationship OneToMany {
+	Forma to Forma{agrupamento}
+}
+
+
+service * with serviceClass
+dto * with mapstruct
+paginate * with infinite-scroll

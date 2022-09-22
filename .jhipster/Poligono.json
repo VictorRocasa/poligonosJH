@@ -1,0 +1,43 @@
+{
+  "applications": "*",
+  "changelogDate": "20220921200402",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "poligono",
+  "fields": [
+    {
+      "fieldName": "lados",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tamanho",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dataCriacao",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "ultimaModificacao",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Poligono",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "forma",
+      "otherEntityRelationshipName": "poligono",
+      "relationshipName": "forma",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

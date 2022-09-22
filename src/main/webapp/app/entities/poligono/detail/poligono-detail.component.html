@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="poligono">
+      <h2 data-cy="poligonoDetailsHeading"><span>Poligono</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>Código</span></dt>
+        <dd>
+          <span>{{ poligono.id }}</span>
+        </dd>
+        <dt><span>Lados</span></dt>
+        <dd>
+          <span>{{ poligono.lados }}</span>
+        </dd>
+        <dt><span>Tamanho</span></dt>
+        <dd>
+          <span>{{ poligono.tamanho }}</span>
+        </dd>
+        <dt><span>Data Criacao</span></dt>
+        <dd>
+          <span>{{ poligono.dataCriacao | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Ultima Modificacao</span></dt>
+        <dd>
+          <span>{{ poligono.ultimaModificacao | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Forma</span></dt>
+        <dd>
+          <div *ngIf="poligono.forma">
+            <a [routerLink]="['/forma', poligono.forma.id, 'view']">{{ poligono.forma.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/poligono', poligono.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

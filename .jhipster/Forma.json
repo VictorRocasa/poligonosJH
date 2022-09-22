@@ -1,0 +1,34 @@
+{
+  "applications": "*",
+  "changelogDate": "20220921200403",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "forma",
+  "fields": [],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Forma",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "poligono",
+      "otherEntityRelationshipName": "forma",
+      "relationshipName": "poligono",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "forma",
+      "otherEntityRelationshipName": "agrupamento",
+      "relationshipName": "forma",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "forma",
+      "otherEntityRelationshipName": "forma",
+      "relationshipName": "agrupamento",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}
