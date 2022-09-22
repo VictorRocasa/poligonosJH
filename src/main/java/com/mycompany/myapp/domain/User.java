@@ -2,7 +2,7 @@ package com.mycompany.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mycompany.myapp.config.Constants;
-import java.io.Serializable;
+//import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Locale;
@@ -23,7 +23,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "jhi_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class User extends AbstractAuditingEntity<Long> implements Serializable {
+public class User extends AbstractAuditingEntity<Long> { //implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

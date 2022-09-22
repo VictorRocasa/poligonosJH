@@ -1,7 +1,10 @@
 package com.mycompany.myapp.service.dto;
 
+import com.mycompany.myapp.domain.Forma;
+import com.mycompany.myapp.domain.Poligono;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.mycompany.myapp.domain.Forma} entity.
@@ -12,6 +15,10 @@ public class FormaDTO implements Serializable {
     private Long id;
 
     private FormaDTO agrupamento;
+
+    private Set<Forma> formas;
+
+    private Set<Poligono> poligonos;
 
     public Long getId() {
         return id;
@@ -27,6 +34,22 @@ public class FormaDTO implements Serializable {
 
     public void setAgrupamento(FormaDTO agrupamento) {
         this.agrupamento = agrupamento;
+    }
+
+    public Set<Forma> getFormas() {
+        return this.formas;
+    }
+
+    public void setFormas(Set<Forma> formas) {
+        this.formas = formas;
+    }
+
+    public Set<Poligono> getPoligonos() {
+        return this.poligonos;
+    }
+
+    public void setPoligonos(Set<Poligono> poligonos) {
+        this.poligonos = poligonos;
     }
 
     @Override

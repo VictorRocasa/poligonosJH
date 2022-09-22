@@ -41,7 +41,7 @@ public class Poligono implements Serializable {
     @Column(name = "ultima_modificacao", nullable = false)
     private Instant ultimaModificacao;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "poligonos", "formas", "agrupamento" }, allowSetters = true)
     private Forma forma;
 

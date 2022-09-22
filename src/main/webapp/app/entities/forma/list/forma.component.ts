@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
@@ -11,12 +11,15 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { EntityArrayResponseType, FormaService } from '../service/forma.service';
 import { FormaDeleteDialogComponent } from '../delete/forma-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
+import { IPoligono } from 'app/entities/poligono/poligono.model';
 
 @Component({
   selector: 'jhi-forma',
   templateUrl: './forma.component.html',
 })
 export class FormaComponent implements OnInit {
+  @ViewChild('elseBlock', { static: true }) elseBlock: TemplateRef<any> | null = null;
+  @ViewChild('elseBlock2', { static: true }) elseBlock2: TemplateRef<any> | null = null;
   formas?: IForma[];
   isLoading = false;
 
@@ -52,6 +55,14 @@ export class FormaComponent implements OnInit {
 
   ngOnInit(): void {
     this.load();
+  }
+
+  getResumoPoligono(poligono: IPoligono): String {
+    return 'ID: ' + poligono.id + '  -  Lados: ' + poligono.lados + '  -  Tamanho: ' + poligono.tamanho;
+  }
+
+  getResumoForma(forma: IForma): String {
+    return 'ID: ' + forma.id + '  -  Poligonos: ' + forma.poligonos?.length + '  -  Formas' + forma.formas?.length;
   }
 
   delete(forma: IForma): void {

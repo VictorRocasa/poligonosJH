@@ -115,6 +115,13 @@ Generic styles
   cursor: pointer;
 }
 
+.dropdown-list {
+  padding-left: 0px;
+  background-color: inherit;
+  width: 85%;
+  text-align: center;
+}
+
 /* ==========================================================================
 Custom alerts for notification
 ========================================================================== */
@@ -213,6 +220,7 @@ ui bootstrap tweaks
 
 .dropdown-menu {
   padding-left: 0px;
+  border-color: #ccc;
 }
 
 /* ==========================================================================

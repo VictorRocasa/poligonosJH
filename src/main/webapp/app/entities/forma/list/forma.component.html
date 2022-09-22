@@ -62,6 +62,18 @@
               <a [routerLink]="['/forma', forma.agrupamento.id, 'view']">{{ forma.agrupamento.id }}</a>
             </div>
           </td>
+          <td *ngIf="forma.poligonos && forma.poligonos.length > 0; else elseBlock">
+            <select id="poligono" name="poligono" #p class="dropdown-list">
+              <option *ngFor="let poligono of forma.poligonos">{{ getResumoPoligono(poligono) }}</option>
+            </select>
+          </td>
+          <ng-template #elseBlock><td>Nenhum</td></ng-template>
+          <td *ngIf="forma.formas && forma.formas.length > 0; else elseBlock2">
+            <select id="agrupamento" name="agrupamento" #a class="dropdown-list">
+              <option *ngFor="let forma of forma.formas">{{ getResumoForma(forma) }}</option>
+            </select>
+          </td>
+          <ng-template #elseBlock2><td>Nenhum</td></ng-template>
           <td class="text-end">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/forma', forma.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
