@@ -5,7 +5,6 @@ import com.mycompany.myapp.repository.PoligonoRepository;
 import com.mycompany.myapp.service.dto.EstoquePoligonosDTO;
 import com.mycompany.myapp.service.dto.PoligonoDTO;
 import com.mycompany.myapp.service.mapper.PoligonoMapper;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -115,11 +114,7 @@ public class PoligonoService {
 
     public List<EstoquePoligonosDTO> listarEstoque(Pageable pageable) {
         log.debug("Requerimento para listar estoque de poligonos");
-        Page<Object[]> page = poligonoRepository.listarEstoque(pageable);
-        List<EstoquePoligonosDTO> poligonos = new ArrayList<EstoquePoligonosDTO>();
-        for (Object p[] : page) poligonos.add(
-            new EstoquePoligonosDTO(Integer.parseInt("" + p[0]), Float.parseFloat("" + p[1]), Integer.parseInt("" + p[2]))
-        );
-        return poligonos;
+        Page<EstoquePoligonosDTO> page = poligonoRepository.listarEstoque(pageable);
+        return page.getContent();
     }
 }

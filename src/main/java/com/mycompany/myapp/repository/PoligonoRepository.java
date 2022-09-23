@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface PoligonoRepository extends JpaRepository<Poligono, Long> {
-    @Query("select p.lados,p.tamanho,count(p.lados) from Poligono p " + "group by (p.lados,p.tamanho,p.forma) having p.forma is null")
-    Page<Object[]> listarEstoque(Pageable pageable);
+    @Query(
+        "select new com.mycompany.myapp.service.dto.EstoquePoligonosDTO(p.lados,p.tamanho,count(p.lados)) from Poligono p " +
+        "group by (p.lados,p.tamanho,p.forma) having p.forma is null"
+    )
+    Page<EstoquePoligonosDTO> listarEstoque(Pageable pageable);
 }

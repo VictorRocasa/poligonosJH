@@ -8,11 +8,11 @@ public class EstoquePoligonosDTO {
 
     private float tamanho;
 
-    private int ocorrencias;
+    private long ocorrencias;
 
     public EstoquePoligonosDTO() {}
 
-    public EstoquePoligonosDTO(int lados, float tamanho, int ocorrencias) {
+    public EstoquePoligonosDTO(int lados, float tamanho, long ocorrencias) {
         this.lados = lados;
         this.tamanho = tamanho;
         this.ocorrencias = ocorrencias;
@@ -34,11 +34,11 @@ public class EstoquePoligonosDTO {
         this.tamanho = tamanho;
     }
 
-    public int getOcorrencias() {
+    public long getOcorrencias() {
         return this.ocorrencias;
     }
 
-    public void setOcorrencias(int ocorrencias) {
+    public void setOcorrencias(long ocorrencias) {
         this.ocorrencias = ocorrencias;
     }
 
