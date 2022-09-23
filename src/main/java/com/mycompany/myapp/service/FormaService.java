@@ -5,6 +5,7 @@ import com.mycompany.myapp.domain.Poligono;
 import com.mycompany.myapp.repository.FormaRepository;
 import com.mycompany.myapp.service.dto.FormaDTO;
 import com.mycompany.myapp.service.mapper.FormaMapper;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -115,5 +116,10 @@ public class FormaService {
         for (Forma f : forma.get().getFormas()) f.setAgrupamento(null);
         for (Poligono p : forma.get().getPoligonos()) p.setForma(null);
         formaRepository.deleteById(id);
+    }
+
+    public List<FormaDTO> listarEstoque(Pageable pageable) {
+        log.debug("Requerimento para listar estoque");
+        return formaRepository.findAllByAgrupamento(null, pageable).map(formaMapper::toDto).getContent();
     }
 }
