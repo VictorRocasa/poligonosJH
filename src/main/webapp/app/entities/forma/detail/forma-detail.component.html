@@ -21,6 +21,53 @@
           </div>
         </dd>
       </dl>
+      <div class="principal">
+        <div class="lista" *ngIf="forma.poligonos && forma.poligonos.length > 0">
+          <h2>Estoque de Polígonos</h2>
+          <table>
+            <tr>
+              <td>nº Lados</td>
+              <td>Tamanho</td>
+              <td>Em estoque</td>
+              <td>Selecionar</td>
+            </tr>
+            <tr class="item" *ngFor="let poligono of forma.poligonos; let i = index">
+              <td>{{ poligono.lados }}</td>
+              <td>{{ poligono.tamanho }}</td>
+              <td>{{ poligono.dataCriacao }}</td>
+              <td>{{ poligono.ultimaModificacao }}</td>
+              <td><input class="selecionar" type="checkbox" name="poligono+{{ i }}" value="{{ i }}" /></td>
+            </tr>
+          </table>
+        </div>
+        <div class="lista">
+          <h2>Estoque de Formas</h2>
+          <table>
+            <tr>
+              <td>Id</td>
+              <td>Poligonos</td>
+              <td>Formas</td>
+              <td>Selecionar</td>
+            </tr>
+            <tr *ngFor="let f of forma.formas; let i = index">
+              <td>{{ f.id }}</td>
+              <!--<td *ngIf="f.poligonos && f.poligonos.length > 0; else elseBlock">
+                <select id="poligono" name="poligono" #p>
+                  <option *ngFor="let poligono of f.poligonos">{{ getResumoPoligono(poligono) }}</option>
+                </select>
+              </td>
+              <ng-template #elseBlock><td>Nenhum</td></ng-template>
+              <td *ngIf="forma.resumoFormas.length > 0; else elseBlock2">
+                <select id="agrupamento" name="agrupamento" #a>
+                  <option *ngFor="let resumo of forma.resumoFormas">{{resumo}}</option>
+                </select>
+              </td>
+              <ng-template #elseBlock2><td>Nenhum</td></ng-template>-->
+              <td><input class="selecionar" type="checkbox" name="forma+{{ i }}" value="{{ i }}" /></td>
+            </tr>
+          </table>
+        </div>
+      </div>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Voltar</span>

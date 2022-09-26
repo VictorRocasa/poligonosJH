@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   verEstoque(): void {
-    this.router.navigate(['']); //'/estoque']);
+    this.router.navigate(['/estoque']);
   }
 
   ngOnDestroy(): void {
