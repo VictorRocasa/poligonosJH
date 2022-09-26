@@ -29,6 +29,10 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
         },
         {
+          path: 'login',
+          loadChildren: () => import('./estoque/estoque.module').then(m => m.EstoqueModule),
+        },
+        {
           path: '',
           loadChildren: () => import(`./entities/entity-routing.module`).then(m => m.EntityRoutingModule),
         },

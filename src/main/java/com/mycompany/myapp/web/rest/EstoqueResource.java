@@ -21,7 +21,7 @@ public class EstoqueResource {
     }
 
     @GetMapping
-    public EstoqueDTO getAllFormas(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public EstoqueDTO getAll(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Formas");
         return estoqueService.findAll(pageable);
     }

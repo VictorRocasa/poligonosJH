@@ -8,7 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest, Observable, switchMap, tap } from 'rxjs';
 import { ASC, DEFAULT_SORT_DATA, DESC, SORT } from 'app/config/navigation.constants';
 import { HttpHeaders } from '@angular/common/http';
-import { IEstoque } from '../estoque.model';
+import { IEstoque } from './estoque.model';
 
 @Component({
   selector: 'jhi-estoque',
