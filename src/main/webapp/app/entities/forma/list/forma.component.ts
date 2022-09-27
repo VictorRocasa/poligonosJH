@@ -57,14 +57,6 @@ export class FormaComponent implements OnInit {
     this.load();
   }
 
-  getResumoPoligono(poligono: IPoligono): String {
-    return 'ID: ' + poligono.id + '  -  Lados: ' + poligono.lados + '  -  Tamanho: ' + poligono.tamanho;
-  }
-
-  getResumoForma(forma: IForma): String {
-    return 'ID: ' + forma.id + '  -  Poligonos: ' + forma.poligonos?.length + '  -  Formas' + forma.formas?.length;
-  }
-
   delete(forma: IForma): void {
     const modalRef = this.modalService.open(FormaDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.forma = forma;
@@ -170,5 +162,13 @@ export class FormaComponent implements OnInit {
     } else {
       return [predicate + ',' + ascendingQueryParam];
     }
+  }
+
+  getResumoPoligono(poligono: IPoligono): String {
+    return 'ID: ' + poligono.id + '  -  Lados: ' + poligono.lados + '  -  Tamanho: ' + poligono.tamanho;
+  }
+
+  getResumoForma(forma: IForma): String {
+    return 'ID: ' + forma.id + '  -  Poligonos: ' + forma.poligonos?.length + '  -  Formas' + forma.formas?.length;
   }
 }

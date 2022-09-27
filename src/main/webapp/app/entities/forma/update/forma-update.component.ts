@@ -7,6 +7,7 @@ import { finalize, map } from 'rxjs/operators';
 import { FormaFormService, FormaFormGroup } from './forma-form.service';
 import { IForma } from '../forma.model';
 import { FormaService } from '../service/forma.service';
+import { IPoligono } from 'app/entities/poligono/poligono.model';
 
 @Component({
   selector: 'jhi-forma-update',
@@ -15,6 +16,8 @@ import { FormaService } from '../service/forma.service';
 export class FormaUpdateComponent implements OnInit {
   isSaving = false;
   forma: IForma | null = null;
+  poligonosEscolhidos: IPoligono | null = null;
+  formasEscolhidas: IForma | null = null;
 
   formasSharedCollection: IForma[] = [];
 

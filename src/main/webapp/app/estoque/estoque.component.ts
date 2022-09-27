@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { ParseLinks } from 'app/core/util/parse-links.service';
-import { IPoligono } from 'app/entities/poligono/poligono.model';
-import { EntityArrayResponseType, PoligonoService } from 'app/entities/poligono/service/poligono.service';
+import { IEstoque } from './estoque.model';
+import { EstoqueService } from 'app/estoque/service/estoque.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest, Observable, switchMap, tap } from 'rxjs';
 import { ASC, DEFAULT_SORT_DATA, DESC, SORT } from 'app/config/navigation.constants';
 import { HttpHeaders } from '@angular/common/http';
-import { IEstoque } from './estoque.model';
+import { IForma } from 'app/entities/forma/forma.model';
+import { IPoligono } from 'app/entities/poligono/poligono.model';
 
 @Component({
   selector: 'jhi-estoque',
@@ -28,7 +29,7 @@ export class EstoqueComponent implements OnInit {
   page = 1;
 
   constructor(
-    //protected poligonoService: PoligonoService,
+    protected estoqueService: EstoqueService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected parseLinks: ParseLinks,
@@ -36,97 +37,27 @@ export class EstoqueComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //this.load();
+    this.estoqueService.find().subscribe(estoque => (this.estoque = estoque));
   }
 
-  /*load(): void {
-    this.loadFromBackendWithRouteInformations().subscribe({
-      next: (res: EntityArrayResponseType) => {
-        this.onResponseSuccess(res);
-      },
-    });
+  getResumoPoligono(poligono: IPoligono): string {
+    return poligono.lados + ' lados de tamanho ' + poligono.tamanho;
   }
 
-  navigateToWithComponentValues(): void {
-    this.handleNavigation(this.page, this.predicate, this.ascending);
-  }
-
-  navigateToPage(page = this.page): void {
-    this.handleNavigation(page, this.predicate, this.ascending);
-  }
-
-  protected loadFromBackendWithRouteInformations(): Observable<EntityArrayResponseType> {
-    return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
-      tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
-      switchMap(() => this.queryBackend(this.page, this.predicate, this.ascending))
-    );
-  }
-
-  protected fillComponentAttributeFromRoute(params: ParamMap, data: Data): void {
-    const sort = (params.get(SORT) ?? data[DEFAULT_SORT_DATA]).split(',');
-    this.predicate = sort[0];
-    this.ascending = sort[1] === ASC;
-  }
-
-  protected onResponseSuccess(response: EntityArrayResponseType): void {
-    this.fillComponentAttributesFromResponseHeader(response.headers);
-    const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
-    this.poligonos = dataFromBody;
-  }
-
-  protected fillComponentAttributesFromResponseBody(data: IPoligono[] | null): IPoligono[] {
-    const poligonosNew = this.poligonos ?? [];
-    if (data) {
-      for (const d of data) {
-        if (poligonosNew.map(op => op.id).indexOf(d.id) === -1) {
-          poligonosNew.push(d);
-        }
+  getResumoForma(forma: IForma): string {
+    let resumo = '';
+    if (forma.poligonos)
+      if (forma.poligonos.length === 0) resumo += '0 poligonos ';
+      else if (forma.poligonos.length == 1) resumo += '1 poligono ';
+      else if (forma.poligonos.length > 1) {
+        resumo += forma.poligonos.length + ' poligonos ';
+        resumo += 'e ';
       }
-    }
-    return poligonosNew;
+
+    if (forma.formas)
+      if (forma.formas.length === 0) resumo += '0 formas';
+      else if (forma.formas.length == 1) resumo += '1 forma';
+      else if (forma.formas.length > 1) resumo += forma.formas.length + ' formas ';
+    return resumo;
   }
-
-  protected fillComponentAttributesFromResponseHeader(headers: HttpHeaders): void {
-    const linkHeader = headers.get('link');
-    if (linkHeader) {
-      this.links = this.parseLinks.parse(linkHeader);
-    } else {
-      this.links = {
-        last: 0,
-      };
-    }
-  }
-
-  protected queryBackend(page?: number, predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
-    this.isLoading = true;
-    const pageToLoad: number = page ?? 1;
-    const queryObject = {
-      page: pageToLoad - 1,
-      size: this.itemsPerPage,
-      sort: this.getSortQueryParam(predicate, ascending),
-    };
-    return this.poligonoService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
-  }
-
-  protected handleNavigation(page = this.page, predicate?: string, ascending?: boolean): void {
-    const queryParamsObj = {
-      page,
-      size: this.itemsPerPage,
-      sort: this.getSortQueryParam(predicate, ascending),
-    };
-
-    this.router.navigate(['./'], {
-      relativeTo: this.activatedRoute,
-      queryParams: queryParamsObj,
-    });
-  }
-
-  protected getSortQueryParam(predicate = this.predicate, ascending = this.ascending): string[] {
-    const ascendingQueryParam = ascending ? ASC : DESC;
-    if (predicate === '') {
-      return [];
-    } else {
-      return [predicate + ',' + ascendingQueryParam];
-    }
-  }*/
 }

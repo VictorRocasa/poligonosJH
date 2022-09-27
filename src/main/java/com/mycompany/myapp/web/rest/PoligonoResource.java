@@ -6,6 +6,7 @@ import com.mycompany.myapp.service.dto.PoligonoDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -95,6 +96,7 @@ public class PoligonoResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
+        poligonoDTO.setUltimaModificacao(Instant.now());
         PoligonoDTO result = poligonoService.update(poligonoDTO);
         return ResponseEntity
             .ok()
