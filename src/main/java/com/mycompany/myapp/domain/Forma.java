@@ -25,12 +25,12 @@ public class Forma implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @OneToMany(mappedBy = "forma", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "forma", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "forma" }, allowSetters = true)
     private Set<Poligono> poligonos = new HashSet<>();
 
-    @OneToMany(mappedBy = "agrupamento", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "agrupamento", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "poligonos", "formas", "agrupamento" }, allowSetters = true)
     private Set<Forma> formas = new HashSet<>();

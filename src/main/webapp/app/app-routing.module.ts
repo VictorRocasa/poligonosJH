@@ -29,7 +29,7 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
         },
         {
-          path: 'login',
+          path: 'estoque',
           loadChildren: () => import('./estoque/estoque.module').then(m => m.EstoqueModule),
         },
         {
