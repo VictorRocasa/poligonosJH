@@ -8,6 +8,7 @@ import { FormaFormService, FormaFormGroup } from './forma-form.service';
 import { IForma } from '../forma.model';
 import { FormaService } from '../service/forma.service';
 import { IPoligono } from 'app/entities/poligono/poligono.model';
+import { EstoqueComponent } from 'app/estoque/estoque.component';
 
 @Component({
   selector: 'jhi-forma-update',
