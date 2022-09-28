@@ -1,5 +1,6 @@
 package com.mycompany.myapp.service;
 
+import com.mycompany.myapp.domain.Forma;
 import com.mycompany.myapp.service.dto.EstoqueDTO;
 import com.mycompany.myapp.service.dto.EstoquePoligonosDTO;
 import com.mycompany.myapp.service.dto.FormaDTO;
@@ -31,5 +32,14 @@ public class EstoqueService {
         List<EstoquePoligonosDTO> estoquePoligonos = poligonoService.listarEstoque(pageable);
         List<FormaDTO> estoqueFormas = formaService.listarEstoque(pageable);
         return new EstoqueDTO(estoquePoligonos, estoqueFormas);
+    }
+
+    public void gerarForma(EstoqueDTO estoqueDTO) {
+        Forma forma = new Forma();
+        forma.setAgrupamento(null);
+        if (estoqueDTO.getPoligonos().size() == 0) forma.setPoligonos(null); else forma.setPoligonos(
+            poligonoService.getPoligonosToInsert(estoqueDTO.getPoligonos())
+        );
+        if (estoqueDTO.getFormas().size() == 0) formaDTO.setFormas(null); else formaService.getFormasToInsert(estoqueDTO.getFormas());
     }
 }

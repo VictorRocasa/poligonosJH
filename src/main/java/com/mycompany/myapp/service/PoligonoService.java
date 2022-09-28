@@ -7,6 +7,7 @@ import com.mycompany.myapp.service.dto.PoligonoDTO;
 import com.mycompany.myapp.service.mapper.PoligonoMapper;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -116,5 +117,13 @@ public class PoligonoService {
         log.debug("Requerimento para listar estoque de poligonos");
         Page<EstoquePoligonosDTO> page = poligonoRepository.listarEstoque(pageable);
         return page.getContent();
+    }
+
+    public Set<Poligono> getPoligonosToInsert(List<EstoquePoligonosDTO> poligonos) {
+        Set<Poligono> poligonosToInsert;
+        for (EstoquePoligonosDTO p : poligonos) {
+            poligonosToInsert.addAll(poligonoRepository.getPoligonosToInsert(p.getLados(), p.getTamanho(), p.getOcorrencias()));
+        }
+        return poligonosToInsert;
     }
 }

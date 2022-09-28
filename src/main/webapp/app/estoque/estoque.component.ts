@@ -64,17 +64,20 @@ export class EstoqueComponent implements OnInit {
 
   enviarObjetos(): void {
     let poligonos: IEstoquePoligonos[] = [];
-    for (let i = 0; i < this.poligonosEscolhidos.length; i++) {
-      if (this.poligonosEscolhidos[i] > 0) {
-        let p: IEstoquePoligonos = this.estoque!.poligonos![i];
-        p.ocorrencias = this.poligonosEscolhidos[i];
-        poligonos.push(p);
+    if (this.poligonosEscolhidos) {
+      for (let i = 0; i < this.poligonosEscolhidos.length; i++) {
+        if (this.poligonosEscolhidos[i] > 0) {
+          let p: IEstoquePoligonos = this.estoque!.poligonos![i];
+          p.ocorrencias = this.poligonosEscolhidos[i];
+          poligonos.push(p);
+        }
       }
     }
     let formas: IForma[] = [];
-    for (let i = 0; i < this.formasEscolhidas.length; i++) {
-      if (this.formasEscolhidas) formas.push(this.estoque!.formas![i]);
-    }
+    if (this.formasEscolhidas)
+      for (let i = 0; i < this.formasEscolhidas.length; i++) if (this.formasEscolhidas) formas.push(this.estoque!.formas![i]);
+    if (poligonos.length == 0 && formas.length == 0) return;
+    this.estoqueService.gerarForma({ poligonos, formas } as IEstoque).subscribe();
   }
 
   getResumoPoligono(poligono: IPoligono): string {

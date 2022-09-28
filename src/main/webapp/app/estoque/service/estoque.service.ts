@@ -19,7 +19,13 @@ export class EstoqueService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
+  //HTTP get
   find(): Observable<IEstoque> {
     return this.http.get<IEstoque>(this.resourceUrl).pipe();
+  }
+
+  //HTTP post
+  gerarForma(selecao: IEstoque): Observable<IEstoque> {
+    return this.http.post<IEstoque>(this.resourceUrl, selecao).pipe();
   }
 }

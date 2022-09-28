@@ -3,6 +3,7 @@ package com.mycompany.myapp.repository;
 import com.mycompany.myapp.domain.Poligono;
 import com.mycompany.myapp.service.dto.EstoquePoligonosDTO;
 import java.util.List;
+import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -19,4 +20,7 @@ public interface PoligonoRepository extends JpaRepository<Poligono, Long> {
         "group by (p.lados,p.tamanho,p.forma) having p.forma is null"
     )
     Page<EstoquePoligonosDTO> listarEstoque(Pageable pageable);
+
+    @Query("select p from Poligono p where p.lados = ?1 and p.tamanho = ?2 limit ?3")
+    Set<Poligono> getPoligonosToInsert(int lados, float tamanho, long ocorrencias);
 }
