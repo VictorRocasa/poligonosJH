@@ -276,3 +276,8 @@ CSS personalizado
 .mini-link {
   cursor: pointer;
 }
+
+.quantidade::-webkit-inner-spin-button {
+  opacity: 1;
+  width: 40px;
+}

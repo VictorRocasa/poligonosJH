@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { ParseLinks } from 'app/core/util/parse-links.service';
@@ -10,12 +10,17 @@ import { ASC, DEFAULT_SORT_DATA, DESC, SORT } from 'app/config/navigation.consta
 import { HttpHeaders } from '@angular/common/http';
 import { IForma } from 'app/entities/forma/forma.model';
 import { IPoligono } from 'app/entities/poligono/poligono.model';
-
+import { FormGroup } from '@angular/forms';
+import { IEstoquePoligonos } from './estoquePoligono.model';
 @Component({
   selector: 'jhi-estoque',
   templateUrl: './estoque.component.html',
 })
 export class EstoqueComponent implements OnInit {
+  poligonosEscolhidos!: number[];
+  formasEscolhidas!: boolean[];
+  teste: number = 0;
+
   estoque?: IEstoque;
   isLoading = false;
 
@@ -38,6 +43,41 @@ export class EstoqueComponent implements OnInit {
 
   ngOnInit(): void {
     this.estoqueService.find().subscribe(estoque => (this.estoque = estoque));
+    if (this.estoque) {
+      if (this.estoque.poligonos) {
+        this.poligonosEscolhidos = new Array(this.estoque.poligonos.length);
+        for (let i: number = 0; i < this.estoque.poligonos.length; i++) this.poligonosEscolhidos[i] = 0;
+      }
+      if (this.estoque.formas) {
+        this.formasEscolhidas = new Array(this.estoque.formas.length);
+        for (let i: number = 0; i < this.estoque.formas.length; i++) this.formasEscolhidas[i] = false;
+      }
+    }
+  }
+
+  selecionaPoligono(index: number, valor: string): void {
+    this.poligonosEscolhidos[index] = Number(valor);
+  }
+
+  selecionaForma(index: number): void {
+    if (!this.formasEscolhidas[index]) this.formasEscolhidas[index] = true;
+    else this.formasEscolhidas[index] = false;
+  }
+
+  @Output()
+  enviarObjetos(): void {
+    let poligonos: IEstoquePoligonos[] = [];
+    for (let i = 0; i < this.poligonosEscolhidos.length; i++) {
+      if (this.poligonosEscolhidos[i] > 0) {
+        let p: IEstoquePoligonos = this.estoque!.poligonos![i];
+        p.ocorrencias = this.poligonosEscolhidos[i];
+        poligonos.push(p);
+      }
+    }
+    let formas: IForma[] = [];
+    for (let i = 0; i < this.formasEscolhidas.length; i++) {
+      if (this.formasEscolhidas) formas.push(this.estoque!.formas![i]);
+    }
   }
 
   getResumoPoligono(poligono: IPoligono): string {

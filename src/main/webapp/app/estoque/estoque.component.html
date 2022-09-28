@@ -12,7 +12,17 @@
         <td>{{ poligono.lados }}</td>
         <td>{{ poligono.tamanho }}</td>
         <td>{{ poligono.ocorrencias }}</td>
-        <td><input class="selecionar" type="checkbox" name="poligono+{{ i }}" value="{{ i }}" /></td>
+        <td>
+          <input
+            class="quantidade"
+            placeholder="0"
+            #p
+            (change)="selecionaPoligono(i, p.value)"
+            type="number"
+            min="0"
+            max="{{ poligono.ocorrencias }}"
+          />
+        </td>
       </tr>
     </table>
   </div>
@@ -39,7 +49,7 @@
           </select>
         </td>
         <ng-template #elseBlock2><td>Nenhum</td></ng-template>
-        <td><input class="selecionar" type="checkbox" name="forma+{{ i }}" value="{{ i }}" /></td>
+        <td><input class="selecionar" type="checkbox" (change)="selecionaForma(i)" /></td>
       </tr>
     </table>
   </div>
