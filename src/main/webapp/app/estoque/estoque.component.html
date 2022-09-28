@@ -1,6 +1,7 @@
+<h1>Estoque de Formas e Polígonos</h1>
 <div class="principal" *ngIf="estoque">
   <div class="lista" *ngIf="estoque.poligonos && estoque.poligonos.length > 0">
-    <h2>Estoque de Polígonos</h2>
+    <h3>Polígonos Disponíveis</h3>
     <table class="tabela">
       <tr>
         <td>nº Lados</td>
@@ -27,7 +28,7 @@
     </table>
   </div>
   <div class="lista" *ngIf="estoque.formas && estoque.formas.length > 0">
-    <h2>Estoque de Formas</h2>
+    <h3>Formas Disponíveis</h3>
     <table class="tabela">
       <tr>
         <td>Id</td>
@@ -52,5 +53,11 @@
         <td><input class="selecionar" type="checkbox" (change)="selecionaForma(i)" /></td>
       </tr>
     </table>
+  </div>
+  <div class="botoes">
+    <button type="button" class="btn btn-primary">Gerar Forma Com Selecionados</button>
+    <button type="button" class="btn btn-secondary">Listar Todos Os Poligonos</button>
+    <button type="button" class="btn btn-secondary">Listar Todas As Formas</button>
+    <button type="button" class="btn btn-secondary">Voltar</button>
   </div>
 </div>

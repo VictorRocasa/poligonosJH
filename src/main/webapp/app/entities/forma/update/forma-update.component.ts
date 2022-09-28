@@ -9,16 +9,21 @@ import { IForma } from '../forma.model';
 import { FormaService } from '../service/forma.service';
 import { IPoligono } from 'app/entities/poligono/poligono.model';
 import { EstoqueComponent } from 'app/estoque/estoque.component';
+import { IEstoque } from 'app/estoque/estoque.model';
+import { IEstoquePoligonos } from 'app/estoque/estoquePoligono.model';
 
 @Component({
   selector: 'jhi-forma-update',
   templateUrl: './forma-update.component.html',
 })
 export class FormaUpdateComponent implements OnInit {
+  estoque?: IEstoque;
+  poligonosEscolhidos!: number[];
+  formasEscolhidas!: boolean[];
+  isLoading = false;
+
   isSaving = false;
   forma: IForma | null = null;
-  poligonosEscolhidos: IPoligono | null = null;
-  formasEscolhidas: IForma | null = null;
 
   formasSharedCollection: IForma[] = [];
 
@@ -89,5 +94,50 @@ export class FormaUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IForma[]>) => res.body ?? []))
       .pipe(map((formas: IForma[]) => this.formaService.addFormaToCollectionIfMissing<IForma>(formas, this.forma?.agrupamento)))
       .subscribe((formas: IForma[]) => (this.formasSharedCollection = formas));
+  }
+
+  selecionaPoligono(index: number, valor: string): void {
+    this.poligonosEscolhidos[index] = Number(valor);
+  }
+
+  selecionaForma(index: number): void {
+    if (!this.formasEscolhidas[index]) this.formasEscolhidas[index] = true;
+    else this.formasEscolhidas[index] = false;
+  }
+
+  enviarObjetos(): void {
+    let poligonos: IEstoquePoligonos[] = [];
+    for (let i = 0; i < this.poligonosEscolhidos.length; i++) {
+      if (this.poligonosEscolhidos[i] > 0) {
+        let p: IEstoquePoligonos = this.estoque!.poligonos![i];
+        p.ocorrencias = this.poligonosEscolhidos[i];
+        poligonos.push(p);
+      }
+    }
+    let formas: IForma[] = [];
+    for (let i = 0; i < this.formasEscolhidas.length; i++) {
+      if (this.formasEscolhidas) formas.push(this.estoque!.formas![i]);
+    }
+  }
+
+  getResumoPoligono(poligono: IPoligono): string {
+    return poligono.lados + ' lados de tamanho ' + poligono.tamanho;
+  }
+
+  getResumoForma(forma: IForma): string {
+    let resumo = '';
+    if (forma.poligonos)
+      if (forma.poligonos.length === 0) resumo += '0 poligonos ';
+      else if (forma.poligonos.length == 1) resumo += '1 poligono ';
+      else if (forma.poligonos.length > 1) {
+        resumo += forma.poligonos.length + ' poligonos ';
+        resumo += 'e ';
+      }
+
+    if (forma.formas)
+      if (forma.formas.length === 0) resumo += '0 formas';
+      else if (forma.formas.length == 1) resumo += '1 forma';
+      else if (forma.formas.length > 1) resumo += forma.formas.length + ' formas ';
+    return resumo;
   }
 }

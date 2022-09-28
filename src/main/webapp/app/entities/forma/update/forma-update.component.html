@@ -27,7 +27,62 @@
         </div>
       </div>
 
-      <jhi-estoque></jhi-estoque>
+      <div class="principal" *ngIf="editForm.controls.id.value !== null && estoque">
+        <div class="lista" *ngIf="estoque.poligonos && estoque.poligonos.length > 0">
+          <h2>Estoque de Polígonos</h2>
+          <table class="tabela">
+            <tr>
+              <td>nº Lados</td>
+              <td>Tamanho</td>
+              <td>Em estoque</td>
+              <td>Selecionar</td>
+            </tr>
+            <tr class="item" *ngFor="let poligono of estoque?.poligonos; let i = index">
+              <td>{{ poligono.lados }}</td>
+              <td>{{ poligono.tamanho }}</td>
+              <td>{{ poligono.ocorrencias }}</td>
+              <td>
+                <input
+                  class="quantidade"
+                  placeholder="0"
+                  #p
+                  (change)="selecionaPoligono(i, p.value)"
+                  type="number"
+                  min="0"
+                  max="{{ poligono.ocorrencias }}"
+                />
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="lista" *ngIf="estoque.formas && estoque.formas.length > 0">
+          <h2>Estoque de Formas</h2>
+          <table class="tabela">
+            <tr>
+              <td>Id</td>
+              <td>Poligonos</td>
+              <td>Formas</td>
+              <td>Selecionar</td>
+            </tr>
+            <tr *ngFor="let forma of estoque.formas; let i = index">
+              <td>{{ forma.id }}</td>
+              <td *ngIf="forma.poligonos && forma.poligonos.length > 0; else elseBlock">
+                <select class="selecionar" id="poligonoNaForma" name="poligonoNaForma" #p>
+                  <option *ngFor="let poligono of forma.poligonos">{{ getResumoPoligono(poligono) }}</option>
+                </select>
+              </td>
+              <ng-template #elseBlock><td>Nenhum</td></ng-template>
+              <td *ngIf="forma.formas && forma.formas.length > 0; else elseBlock2">
+                <select id="formasNaForma" name="formasNaForma" #a>
+                  <option *ngFor="let f of forma.formas">{{ getResumoForma(forma) }}</option>
+                </select>
+              </td>
+              <ng-template #elseBlock2><td>Nenhum</td></ng-template>
+              <td><input class="selecionar" type="checkbox" (change)="selecionaForma(i)" /></td>
+            </tr>
+          </table>
+        </div>
+      </div>
 
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">

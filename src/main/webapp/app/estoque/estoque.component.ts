@@ -17,11 +17,9 @@ import { IEstoquePoligonos } from './estoquePoligono.model';
   templateUrl: './estoque.component.html',
 })
 export class EstoqueComponent implements OnInit {
+  estoque?: IEstoque;
   poligonosEscolhidos!: number[];
   formasEscolhidas!: boolean[];
-  teste: number = 0;
-
-  estoque?: IEstoque;
   isLoading = false;
 
   predicate = 'id';
@@ -64,7 +62,6 @@ export class EstoqueComponent implements OnInit {
     else this.formasEscolhidas[index] = false;
   }
 
-  @Output()
   enviarObjetos(): void {
     let poligonos: IEstoquePoligonos[] = [];
     for (let i = 0; i < this.poligonosEscolhidos.length; i++) {
