@@ -5,7 +5,7 @@ import com.mycompany.myapp.repository.PoligonoRepository;
 import com.mycompany.myapp.service.dto.EstoquePoligonosDTO;
 import com.mycompany.myapp.service.dto.PoligonoDTO;
 import com.mycompany.myapp.service.mapper.PoligonoMapper;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import org.slf4j.Logger;
@@ -113,14 +113,14 @@ public class PoligonoService {
         poligonoRepository.deleteById(id);
     }
 
-    public List<EstoquePoligonosDTO> listarEstoque(Pageable pageable) {
+    public Set<EstoquePoligonosDTO> listarEstoque(Pageable pageable) {
         log.debug("Requerimento para listar estoque de poligonos");
         Page<EstoquePoligonosDTO> page = poligonoRepository.listarEstoque(pageable);
-        return page.getContent();
+        return new HashSet<EstoquePoligonosDTO>(page.getContent());
     }
 
-    public Set<Poligono> getPoligonosToInsert(List<EstoquePoligonosDTO> poligonos) {
-        Set<Poligono> poligonosToInsert;
+    public Set<Poligono> getPoligonosToInsert(Set<EstoquePoligonosDTO> poligonos) {
+        Set<Poligono> poligonosToInsert = new HashSet<>();
         for (EstoquePoligonosDTO p : poligonos) {
             poligonosToInsert.addAll(poligonoRepository.getPoligonosToInsert(p.getLados(), p.getTamanho(), p.getOcorrencias()));
         }

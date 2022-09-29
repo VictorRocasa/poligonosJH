@@ -1,34 +1,34 @@
 package com.mycompany.myapp.service.dto;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class EstoqueDTO {
 
-    List<EstoquePoligonosDTO> poligonos;
+    Set<EstoquePoligonosDTO> poligonos;
 
-    List<FormaDTO> formas;
+    Set<FormaDTO> formas;
 
     public EstoqueDTO() {}
 
-    public EstoqueDTO(List<EstoquePoligonosDTO> poligonos, List<FormaDTO> formas) {
+    public EstoqueDTO(Set<EstoquePoligonosDTO> poligonos, Set<FormaDTO> formas) {
         this.poligonos = poligonos;
         this.formas = formas;
     }
 
-    public List<EstoquePoligonosDTO> getPoligonos() {
+    public Set<EstoquePoligonosDTO> getPoligonos() {
         return this.poligonos;
     }
 
-    public void setPoligonos(List<EstoquePoligonosDTO> poligonos) {
+    public void setPoligonos(Set<EstoquePoligonosDTO> poligonos) {
         this.poligonos = poligonos;
     }
 
-    public List<FormaDTO> getFormas() {
+    public Set<FormaDTO> getFormas() {
         return this.formas;
     }
 
-    public void setFormas(List<FormaDTO> formas) {
+    public void setFormas(Set<FormaDTO> formas) {
         this.formas = formas;
     }
 

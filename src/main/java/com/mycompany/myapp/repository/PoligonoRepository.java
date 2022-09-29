@@ -21,6 +21,6 @@ public interface PoligonoRepository extends JpaRepository<Poligono, Long> {
     )
     Page<EstoquePoligonosDTO> listarEstoque(Pageable pageable);
 
-    @Query("select p from Poligono p where p.lados = ?1 and p.tamanho = ?2 limit ?3")
-    Set<Poligono> getPoligonosToInsert(int lados, float tamanho, long ocorrencias);
+    @Query(nativeQuery = true, value = "select * from Poligono where lados = ?1 and tamanho = ?2 order by lados limit ?3")
+    Set<Poligono> getPoligonosToInsert(int lados, float tamanho, Long limite);
 }

@@ -1,11 +1,12 @@
 package com.mycompany.myapp.service;
 
-import com.mycompany.myapp.domain.Forma;
 import com.mycompany.myapp.service.dto.EstoqueDTO;
 import com.mycompany.myapp.service.dto.EstoquePoligonosDTO;
 import com.mycompany.myapp.service.dto.FormaDTO;
+import com.mycompany.myapp.service.mapper.FormaMapper;
 import com.mycompany.myapp.web.rest.PoligonoResource;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -18,28 +19,36 @@ public class EstoqueService {
 
     private final Logger log = LoggerFactory.getLogger(PoligonoResource.class);
 
-    PoligonoService poligonoService;
+    private final PoligonoService poligonoService;
 
-    FormaService formaService;
+    private final FormaService formaService;
 
-    public EstoqueService(PoligonoService poligonoService, FormaService formaService) {
+    private final FormaMapper formaMapper;
+
+    public EstoqueService(PoligonoService poligonoService, FormaService formaService, FormaMapper formaMapper) {
         this.poligonoService = poligonoService;
         this.formaService = formaService;
+        this.formaMapper = formaMapper;
     }
 
     public EstoqueDTO findAll(Pageable pageable) {
         log.debug("Requerimento para listar estoque");
-        List<EstoquePoligonosDTO> estoquePoligonos = poligonoService.listarEstoque(pageable);
-        List<FormaDTO> estoqueFormas = formaService.listarEstoque(pageable);
+        Set<EstoquePoligonosDTO> estoquePoligonos = poligonoService.listarEstoque(pageable);
+        Set<FormaDTO> estoqueFormas = formaService.listarEstoque(pageable);
         return new EstoqueDTO(estoquePoligonos, estoqueFormas);
     }
 
+    @Transactional
     public void gerarForma(EstoqueDTO estoqueDTO) {
-        Forma forma = new Forma();
-        forma.setAgrupamento(null);
-        if (estoqueDTO.getPoligonos().size() == 0) forma.setPoligonos(null); else forma.setPoligonos(
+        FormaDTO formaDTO = new FormaDTO();
+        if (estoqueDTO.getPoligonos().size() == 0) formaDTO.setPoligonos(null); else formaDTO.setPoligonos(
             poligonoService.getPoligonosToInsert(estoqueDTO.getPoligonos())
         );
-        if (estoqueDTO.getFormas().size() == 0) formaDTO.setFormas(null); else formaService.getFormasToInsert(estoqueDTO.getFormas());
+        formaDTO = formaService.save(formaDTO);
+        if (estoqueDTO.getFormas().size() != 0) {
+            Set<Long> idFormas = new HashSet<>();
+            for (FormaDTO forma : estoqueDTO.getFormas()) idFormas.add(forma.getId());
+            formaService.insereFormasNaForma(idFormas, formaMapper.toEntity(formaDTO));
+        }
     }
 }

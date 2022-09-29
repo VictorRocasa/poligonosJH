@@ -20,6 +20,7 @@ export class EstoqueComponent implements OnInit {
   estoque?: IEstoque;
   poligonosEscolhidos!: number[];
   formasEscolhidas!: boolean[];
+  iniciado = false;
   isLoading = false;
 
   predicate = 'id';
@@ -32,15 +33,18 @@ export class EstoqueComponent implements OnInit {
   page = 1;
 
   constructor(
-    protected estoqueService: EstoqueService,
-    protected activatedRoute: ActivatedRoute,
     public router: Router,
+    protected activatedRoute: ActivatedRoute,
+    protected estoqueService: EstoqueService,
     protected parseLinks: ParseLinks,
     protected modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     this.estoqueService.find().subscribe(estoque => (this.estoque = estoque));
+  }
+
+  iniciar(): void {
     if (this.estoque) {
       if (this.estoque.poligonos) {
         this.poligonosEscolhidos = new Array(this.estoque.poligonos.length);
@@ -51,13 +55,16 @@ export class EstoqueComponent implements OnInit {
         for (let i: number = 0; i < this.estoque.formas.length; i++) this.formasEscolhidas[i] = false;
       }
     }
+    this.iniciado = true;
   }
 
   selecionaPoligono(index: number, valor: string): void {
+    if (!this.iniciado) this.iniciar();
     this.poligonosEscolhidos[index] = Number(valor);
   }
 
   selecionaForma(index: number): void {
+    if (!this.iniciado) this.iniciar();
     if (!this.formasEscolhidas[index]) this.formasEscolhidas[index] = true;
     else this.formasEscolhidas[index] = false;
   }
@@ -74,8 +81,7 @@ export class EstoqueComponent implements OnInit {
       }
     }
     let formas: IForma[] = [];
-    if (this.formasEscolhidas)
-      for (let i = 0; i < this.formasEscolhidas.length; i++) if (this.formasEscolhidas) formas.push(this.estoque!.formas![i]);
+    if (this.formasEscolhidas) for (let i = 0; i < this.formasEscolhidas.length; i++) formas.push(this.estoque!.formas![i]);
     if (poligonos.length == 0 && formas.length == 0) return;
     this.estoqueService.gerarForma({ poligonos, formas } as IEstoque).subscribe();
   }

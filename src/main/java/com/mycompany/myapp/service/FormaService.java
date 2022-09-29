@@ -5,8 +5,10 @@ import com.mycompany.myapp.domain.Poligono;
 import com.mycompany.myapp.repository.FormaRepository;
 import com.mycompany.myapp.service.dto.FormaDTO;
 import com.mycompany.myapp.service.mapper.FormaMapper;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -118,8 +120,13 @@ public class FormaService {
         formaRepository.deleteById(id);
     }
 
-    public List<FormaDTO> listarEstoque(Pageable pageable) {
+    public Set<FormaDTO> listarEstoque(Pageable pageable) {
         log.debug("Requerimento para listar estoque");
-        return formaRepository.findAllByAgrupamento(null, pageable).map(formaMapper::toDto).getContent();
+        return new HashSet<FormaDTO>(formaRepository.findAllByAgrupamento(null, pageable).map(formaMapper::toDto).getContent());
+    }
+
+    public void insereFormasNaForma(Set<Long> idFormas, Forma forma) {
+        List<Forma> findAllById = formaRepository.findAllById(idFormas);
+        for (Forma f : findAllById) f.setAgrupamento(forma);
     }
 }
