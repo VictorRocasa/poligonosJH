@@ -46,7 +46,7 @@
         <ng-template #elseBlock><td>Nenhum</td></ng-template>
         <td *ngIf="forma.formas && forma.formas.length > 0; else elseBlock2">
           <select id="formasNaForma" name="formasNaForma" #a>
-            <option *ngFor="let f of forma.formas">{{ getResumoForma(forma) }}</option>
+            <option *ngFor="let f of forma.formas">{{ getResumoForma(f) }}</option>
           </select>
         </td>
         <ng-template #elseBlock2><td>Nenhum</td></ng-template>
@@ -56,8 +56,8 @@
   </div>
   <div class="botoes">
     <button type="button" class="btn btn-primary" (click)="enviarObjetos()">Gerar Forma Com Selecionados</button>
-    <button type="button" class="btn btn-secondary">Listar Todos Os Poligonos</button>
-    <button type="button" class="btn btn-secondary">Listar Todas As Formas</button>
-    <button type="button" class="btn btn-secondary">Voltar</button>
+    <button type="button" class="btn btn-secondary" routerLink="/poligono">Listar Todos Os Poligonos</button>
+    <button type="button" class="btn btn-secondary" routerLink="/forma">Listar Todas As Formas</button>
+    <button type="button" class="btn btn-secondary" (click)="previousState()">Voltar</button>
   </div>
 </div>

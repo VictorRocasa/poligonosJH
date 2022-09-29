@@ -84,6 +84,7 @@ export class EstoqueComponent implements OnInit {
     if (this.formasEscolhidas) for (let i = 0; i < this.formasEscolhidas.length; i++) formas.push(this.estoque!.formas![i]);
     if (poligonos.length == 0 && formas.length == 0) return;
     this.estoqueService.gerarForma({ poligonos, formas } as IEstoque).subscribe();
+    window.location.reload();
   }
 
   getResumoPoligono(poligono: IPoligono): string {
@@ -104,6 +105,10 @@ export class EstoqueComponent implements OnInit {
       if (forma.formas.length === 0) resumo += '0 formas';
       else if (forma.formas.length == 1) resumo += '1 forma';
       else if (forma.formas.length > 1) resumo += forma.formas.length + ' formas ';
-    return resumo;
+    return forma.id + ', ' + resumo;
+  }
+
+  previousState(): void {
+    window.history.back();
   }
 }
