@@ -27,8 +27,11 @@ public class EstoqueResource {
     }
 
     @PostMapping
-    public void gerarForma(@RequestBody EstoqueDTO estoqueDTO) {
+    public void gerarForma(@RequestBody EstoqueDTO estoqueDTO) throws IllegalStateException {
         log.debug("Post request to create a Formas");
+        if (estoqueDTO.getFormas().isEmpty() && estoqueDTO.getPoligonos().isEmpty()) throw new IllegalStateException(
+            "A nova forma não pode ser vazia!"
+        );
         estoqueService.gerarForma(estoqueDTO);
     }
 }

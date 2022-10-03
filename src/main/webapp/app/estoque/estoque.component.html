@@ -1,4 +1,17 @@
 <h1>Estoque de Formas e Polígonos</h1>
+
+<jhi-alert-error></jhi-alert-error>
+
+<jhi-alert></jhi-alert>
+
+<div
+  class="alert alert-warning"
+  id="no-result"
+  *ngIf="!estoque || (!estoque.formas && !estoque.poligonos) || (estoque.poligonos?.length === 0 && estoque.formas?.length === 0)"
+>
+  <span>Todos os poligonos e formas em uso no momento!</span>
+</div>
+
 <div class="principal" *ngIf="estoque">
   <div class="lista" *ngIf="estoque.poligonos && estoque.poligonos.length > 0">
     <h3>Polígonos Disponíveis</h3>
@@ -55,7 +68,7 @@
     </table>
   </div>
   <div class="botoes">
-    <button type="button" class="btn btn-primary" (click)="enviarObjetos()">Gerar Forma Com Selecionados</button>
+    <button type="button" class="btn btn-primary" (click)="enviarObjetos()" [disabled]="isSaving">Gerar Forma Com Selecionados</button>
     <button type="button" class="btn btn-secondary" routerLink="/poligono">Listar Todos Os Poligonos</button>
     <button type="button" class="btn btn-secondary" routerLink="/forma">Listar Todas As Formas</button>
     <button type="button" class="btn btn-secondary" (click)="previousState()">Voltar</button>

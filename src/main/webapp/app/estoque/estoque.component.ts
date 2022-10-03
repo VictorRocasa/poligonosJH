@@ -5,7 +5,7 @@ import { ParseLinks } from 'app/core/util/parse-links.service';
 import { IEstoque } from './estoque.model';
 import { EstoqueService } from 'app/estoque/service/estoque.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { combineLatest, Observable, switchMap, tap } from 'rxjs';
+import { combineLatest, finalize, Observable, switchMap, tap } from 'rxjs';
 import { ASC, DEFAULT_SORT_DATA, DESC, SORT } from 'app/config/navigation.constants';
 import { HttpHeaders } from '@angular/common/http';
 import { IForma } from 'app/entities/forma/forma.model';
@@ -21,7 +21,7 @@ export class EstoqueComponent implements OnInit {
   poligonosEscolhidos!: number[];
   formasEscolhidas!: boolean[];
   iniciado = false;
-  isLoading = false;
+  isSaving = false;
 
   predicate = 'id';
   ascending = true;
@@ -70,6 +70,7 @@ export class EstoqueComponent implements OnInit {
   }
 
   enviarObjetos(): void {
+    this.isSaving = true;
     let poligonos: IEstoquePoligonos[] = [];
     if (this.poligonosEscolhidos) {
       for (let i = 0; i < this.poligonosEscolhidos.length; i++) {
@@ -82,9 +83,25 @@ export class EstoqueComponent implements OnInit {
     }
     let formas: IForma[] = [];
     if (this.formasEscolhidas) for (let i = 0; i < this.formasEscolhidas.length; i++) formas.push(this.estoque!.formas![i]);
-    if (poligonos.length == 0 && formas.length == 0) return;
-    this.estoqueService.gerarForma({ poligonos, formas } as IEstoque).subscribe();
+    this.estoqueService
+      .gerarForma({ poligonos, formas } as IEstoque)
+      .pipe(finalize(() => this.onSaveFinalize()))
+      .subscribe({
+        next: () => this.onSaveSuccess(),
+        error: () => this.onSaveError(),
+      });
+  }
+
+  protected onSaveSuccess(): void {
     window.location.reload();
+  }
+
+  protected onSaveFinalize(): void {
+    this.isSaving = false;
+  }
+
+  protected onSaveError(): void {
+    // Api for inheritance.
   }
 
   getResumoPoligono(poligono: IPoligono): string {
@@ -105,7 +122,7 @@ export class EstoqueComponent implements OnInit {
       if (forma.formas.length === 0) resumo += '0 formas';
       else if (forma.formas.length == 1) resumo += '1 forma';
       else if (forma.formas.length > 1) resumo += forma.formas.length + ' formas ';
-    return forma.id + ', ' + resumo;
+    return forma.id + ': ' + resumo;
   }
 
   previousState(): void {
