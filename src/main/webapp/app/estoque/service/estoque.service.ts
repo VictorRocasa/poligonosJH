@@ -9,6 +9,8 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { IEstoque } from '../estoque.model';
 
+export type EntityResponseType = HttpResponse<IEstoque>;
+
 @Injectable({ providedIn: 'root' })
 export class EstoqueService {
   httpOptions = {
@@ -25,7 +27,7 @@ export class EstoqueService {
   }
 
   //HTTP post
-  gerarForma(selecao: IEstoque): Observable<IEstoque> {
-    return this.http.post<IEstoque>(this.resourceUrl, selecao).pipe();
+  gerarForma(selecao: IEstoque): Observable<EntityResponseType> {
+    return this.http.post<IEstoque>(this.resourceUrl, selecao, { observe: 'response' }).pipe();
   }
 }

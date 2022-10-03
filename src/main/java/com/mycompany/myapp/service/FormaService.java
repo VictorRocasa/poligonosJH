@@ -115,6 +115,9 @@ public class FormaService {
         //formaRepository.deleteBy
         Optional<Forma> forma = formaRepository.findById(id);
         if (forma.isEmpty()) throw new IllegalArgumentException();
+        if (forma.get().getAgrupamento() != null) throw new IllegalArgumentException(
+            "Impossível deletar uma forma que compõe outra forma!"
+        );
         for (Forma f : forma.get().getFormas()) f.setAgrupamento(null);
         for (Poligono p : forma.get().getPoligonos()) p.setForma(null);
         formaRepository.deleteById(id);
