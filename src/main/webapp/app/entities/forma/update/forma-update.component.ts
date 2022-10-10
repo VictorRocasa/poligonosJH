@@ -11,6 +11,7 @@ import { IPoligono } from 'app/entities/poligono/poligono.model';
 import { EstoqueComponent } from 'app/estoque/estoque.component';
 import { IEstoque } from 'app/estoque/estoque.model';
 import { IEstoquePoligonos } from 'app/estoque/estoquePoligono.model';
+import { EstoqueService } from 'app/estoque/service/estoque.service';
 
 @Component({
   selector: 'jhi-forma-update',
@@ -32,12 +33,13 @@ export class FormaUpdateComponent implements OnInit {
   constructor(
     protected formaService: FormaService,
     protected formaFormService: FormaFormService,
+    protected estoqueService: EstoqueService,
     protected activatedRoute: ActivatedRoute
   ) {}
 
   compareForma = (o1: IForma | null, o2: IForma | null): boolean => this.formaService.compareForma(o1, o2);
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.activatedRoute.data.subscribe(({ forma }) => {
       this.forma = forma;
       if (forma) {
@@ -46,6 +48,8 @@ export class FormaUpdateComponent implements OnInit {
 
       this.loadRelationshipsOptions();
     });
+    await this.forma;
+    this.estoqueService.findByForma(this.forma!).subscribe(estoque => (this.estoque = estoque));
   }
 
   previousState(): void {

@@ -128,6 +128,15 @@ public class FormaService {
         return new HashSet<FormaDTO>(formaRepository.findAllByAgrupamento(null, pageable).map(formaMapper::toDto).getContent());
     }
 
+    public Set<FormaDTO> listarEstoqueByForma(Forma forma) {
+        log.debug("Requerimento para listar estoque disponivel em uma forma");
+        Set<Forma> formas = formaRepository.findByAgrupamentoOrAgrupamentoIsNull(forma);
+        Set<FormaDTO> formaDTOs = new HashSet<FormaDTO>(formas.size());
+        for(Forma f:formas)
+            formaDTOs.add(formaMapper.toDto(f));
+        return formaDTOs;
+    }
+
     public void insereFormasNaForma(Set<Long> idFormas, Forma forma) {
         List<Forma> findAllById = formaRepository.findAllById(idFormas);
         for (Forma f : findAllById) f.setAgrupamento(forma);

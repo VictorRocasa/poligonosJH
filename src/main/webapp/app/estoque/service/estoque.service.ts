@@ -8,6 +8,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IEstoque } from '../estoque.model';
+import { IForma } from 'app/entities/forma/forma.model';
 
 export type EntityResponseType = HttpResponse<IEstoque>;
 
@@ -21,9 +22,14 @@ export class EstoqueService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  //HTTP get
+  //HTTP GET
   find(): Observable<IEstoque> {
     return this.http.get<IEstoque>(this.resourceUrl).pipe();
+  }
+
+  //HTTP POST
+  findByForma(forma: IForma): Observable<IEstoque> {
+    return this.http.post<IEstoque>(this.resourceUrl+"/estoqueForma", forma).pipe();
   }
 
   //HTTP post

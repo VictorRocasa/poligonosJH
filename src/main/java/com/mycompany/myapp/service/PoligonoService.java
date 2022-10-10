@@ -1,5 +1,6 @@
 package com.mycompany.myapp.service;
 
+import com.mycompany.myapp.domain.Forma;
 import com.mycompany.myapp.domain.Poligono;
 import com.mycompany.myapp.repository.PoligonoRepository;
 import com.mycompany.myapp.service.dto.EstoquePoligonosDTO;
@@ -112,11 +113,15 @@ public class PoligonoService {
         log.debug("Request to delete Poligono : {}", id);
         poligonoRepository.deleteById(id);
     }
-
+    
     public Set<EstoquePoligonosDTO> listarEstoque(Pageable pageable) {
         log.debug("Requerimento para listar estoque de poligonos");
         Page<EstoquePoligonosDTO> page = poligonoRepository.listarEstoque(pageable);
         return new HashSet<EstoquePoligonosDTO>(page.getContent());
+    }
+    public Set<EstoquePoligonosDTO> listarEstoqueByForma(Forma forma) {
+        log.debug("Requerimento para listar estoque de poligonos");
+        return poligonoRepository.encontrarPoligonosNaForma(forma);
     }
 
     public Set<Poligono> getPoligonosToInsert(Set<EstoquePoligonosDTO> poligonos) {

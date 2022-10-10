@@ -2,6 +2,8 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.service.EstoqueService;
 import com.mycompany.myapp.service.dto.EstoqueDTO;
+import com.mycompany.myapp.service.dto.FormaDTO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,12 @@ public class EstoqueResource {
     public EstoqueDTO getAll(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of estoque");
         return estoqueService.findAll(pageable);
+    }
+
+    @PostMapping("/estoqueForma")
+    public EstoqueDTO findByForma(@RequestBody FormaDTO formaDTO) {
+        log.debug("REST request to get a page of estoque");
+        return estoqueService.findAllByForma(formaDTO);
     }
 
     @PostMapping

@@ -83,8 +83,7 @@ export class EstoqueComponent implements OnInit {
     }
     let formas: IForma[] = [];
     if (this.formasEscolhidas) for (let i = 0; i < this.formasEscolhidas.length; i++) formas.push(this.estoque!.formas![i]);
-    this.estoqueService
-      .gerarForma({ poligonos, formas } as IEstoque)
+    this.estoqueService.gerarForma({ poligonos, formas } as IEstoque)
       .pipe(finalize(() => this.onSaveFinalize()))
       .subscribe({
         next: () => this.onSaveSuccess(),

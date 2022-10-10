@@ -3,6 +3,7 @@ package com.mycompany.myapp.repository;
 import com.mycompany.myapp.domain.Forma;
 import com.mycompany.myapp.service.dto.FormaDTO;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,4 +17,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FormaRepository extends JpaRepository<Forma, Long> {
     Page<Forma> findAllByAgrupamento(Forma forma, Pageable pageable);
+
+    Set<Forma> findByAgrupamentoOrAgrupamentoIsNull(Forma forma);
 }

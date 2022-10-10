@@ -1,5 +1,6 @@
 package com.mycompany.myapp.repository;
 
+import com.mycompany.myapp.domain.Forma;
 import com.mycompany.myapp.domain.Poligono;
 import com.mycompany.myapp.service.dto.EstoquePoligonosDTO;
 import java.util.List;
@@ -23,4 +24,10 @@ public interface PoligonoRepository extends JpaRepository<Poligono, Long> {
 
     @Query(nativeQuery = true, value = "select * from Poligono where lados = ?1 and tamanho = ?2 order by lados limit ?3")
     Set<Poligono> getPoligonosToInsert(int lados, float tamanho, Long limite);
+
+    @Query(
+        "select new com.mycompany.myapp.service.dto.EstoquePoligonosDTO(p.lados,p.tamanho,count(p.lados)) from Poligono p " +
+    "group by (p.lados,p.tamanho,p.forma) having p.forma is null or p.forma = ?1"
+    )
+    Set<EstoquePoligonosDTO> encontrarPoligonosNaForma(Forma forma);
 }

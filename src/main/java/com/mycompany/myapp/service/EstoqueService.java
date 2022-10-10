@@ -39,6 +39,14 @@ public class EstoqueService {
     }
 
     @Transactional
+    public EstoqueDTO findAllByForma(FormaDTO formaDTO){
+        log.debug("Requerimento para listar estoque disponível para uma forma específica");
+        Set<EstoquePoligonosDTO> estoquePoligonos = poligonoService.listarEstoqueByForma(formaMapper.toEntity(formaDTO));
+        Set<FormaDTO> estoqueFormas = formaService.listarEstoqueByForma(formaMapper.toEntity(formaDTO));
+        return new EstoqueDTO(estoquePoligonos, estoqueFormas);
+    }
+
+    @Transactional
     public void gerarForma(EstoqueDTO estoqueDTO) {
         FormaDTO formaDTO = new FormaDTO();
         if (estoqueDTO.getPoligonos().size() == 0) formaDTO.setPoligonos(null); else formaDTO.setPoligonos(
